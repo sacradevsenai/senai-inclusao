@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Publicação de Notificações — SENAI Inclusão</title>
+  <!-- base.css: variáveis, reset e componentes compartilhados -->
+  <link rel="stylesheet" href="css/base.css">
+  <!-- menu.css: detalhes do menu lateral (igual ao cadastro) -->
+  <link rel="stylesheet" href="css/menu.css">
+  <!-- publicacao.css: só o que é específico desta tela -->
+  <link rel="stylesheet" href="css/publicacao.css">
+</head>
+<body class="tela-publicacao">
+  <div class="app-web">
+
+    <!-- ===== Menu lateral (mesmo HTML do cadastro; o item ativo agora é "Notificações") ===== -->
+    <nav class="menu-lateral" aria-label="Menu principal">
+      <img class="menu-logo" src="img/logo-senai-inclusao.png" alt="SENAI Inclusão" width="252" height="119">
+
+      <a class="menu-item" href="cadastro.html">
+        <!-- versão cinza do ícone (no cadastro ele é branco porque lá o item é o ativo) -->
+        <span class="icone"><img src="img/cadastro-icon-cinza.svg" alt="" width="22" height="23"></span>
+        Cadastro do Aluno
+      </a>
+      <a class="menu-item" href="#">
+        <span class="icone"><img src="img/mapa-rota-icon.svg" alt="" width="24" height="24"></span>
+        Mapas e Rotas
+      </a>
+      <a class="menu-item" href="#">
+        <span class="icone"><img src="img/interdicao-trecho-icon.svg" alt="" width="24" height="24"></span>
+        Interdição de Trechos
+      </a>
+      <!-- aria-current="page" avisa o leitor de tela qual é a página atual -->
+      <a class="menu-item ativo" href="publicacao.html" aria-current="page">
+        <span class="icone"><img src="img/notificacao-icon-branco.svg" alt="" width="24" height="24"></span>
+        Notificações
+      </a>
+      <a class="menu-item" href="#">
+        <span class="icone"><img src="img/painel-ciencia-icon.svg" alt="" width="24" height="24"></span>
+        Painel de Ciência
+      </a>
+      <a class="menu-item" href="#">
+        <span class="icone icone--suporte"><img src="img/suport-icon.svg" alt="" width="24" height="20"></span>
+        Suporte
+      </a>
+      <a class="menu-item menu-item--sair" href="login.html">
+        <span class="icone"><img src="img/sair-icon.svg" alt="" width="26" height="26"></span>
+        Sair
+      </a>
+    </nav>
+
+    <!-- ===== Conteúdo ===== -->
+    <main class="conteudo-web" id="conteudo">
+      <h1 class="titulo-pagina titulo-pub">Publicação de Notificações</h1>
+
+      <!-- novalidate: a validação é feita em js/publicacao.js (para controlar a mensagem) -->
+      <form id="form-publicacao" class="pub-grade" novalidate>
+
+        <!-- ===== Coluna esquerda: formulário (480px) ===== -->
+        <div class="pub-form">
+
+          <div class="campo bloco bloco--titulo">
+            <label for="titulo">Título do Comunicado</label>
+            <div class="campo__caixa">
+              <input type="text" id="titulo" name="titulo" autocomplete="off"
+                     value="Entrada de turmas às 7h" placeholder="Ex: Entrada de turmas às 7h"
+                     required aria-required="true" aria-describedby="erro-titulo">
+              <p class="campo__erro" id="erro-titulo" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <!-- Tipo: fieldset + legend agrupam os rádios para o leitor de tela -->
+          <fieldset class="bloco bloco--tipo grupo-radio">
+            <legend>Tipo</legend>
+            <div class="radios">
+              <label class="radio"><input type="radio" name="tipo" value="institucional"> <span>Institucional</span></label>
+              <label class="radio"><input type="radio" name="tipo" value="extraordinario"> <span>Extraordinário</span></label>
+              <label class="radio"><input type="radio" name="tipo" value="fluxo" checked> <span>Fluxo e ocupação</span></label>
+            </div>
+          </fieldset>
+
+          <div class="campo bloco bloco--texto">
+            <label for="texto">Texto do comunicado</label>
+            <div class="campo__caixa">
+              <textarea id="texto" name="texto" rows="4"
+                        placeholder="Ex: Entre pelo portão B para evitar filas."
+                        required aria-required="true" aria-describedby="erro-texto">Entre pelo portão B para evitar filas.
+O corredor A terá mais fluxo entre 7h e 7h30.</textarea>
+              <p class="campo__erro" id="erro-texto" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="campo bloco bloco--turma">
+            <label for="turma">Selecionar Turma</label>
+            <div class="campo__caixa">
+              <select id="turma" name="turma">
+                <option value="todas" selected>Todas as turmas</option>
+                <!-- turmas de exemplo: o Figma só mostra "Todas as turmas" (trocar pelas reais depois) -->
+                <option value="1a">Turma 1A</option>
+                <option value="1b">Turma 1B</option>
+                <option value="2a">Turma 2A</option>
+              </select>
+            </div>
+          </div>
+
+          <fieldset class="bloco bloco--entrega grupo-radio">
+            <legend>Entrega</legend>
+            <div class="radios">
+              <label class="radio"><input type="radio" name="entrega" value="agora"> <span>Enviar agora</span></label>
+              <label class="radio"><input type="radio" name="entrega" value="agendar" checked> <span>Agendar Recorrência</span></label>
+            </div>
+          </fieldset>
+
+          <!-- Dias e hora: o espaço é sempre reservado (visibility), então o layout não muda -->
+          <div class="agenda" id="agenda">
+            <div class="campo">
+              <label for="dias" class="so-leitor">Dias da semana</label>
+              <div class="campo__caixa">
+                <!-- Por enquanto é texto livre. Para evoluir: trocar por 7 <input type="checkbox"> (Seg...Dom) -->
+                <input type="text" id="dias" name="dias" autocomplete="off" value="Seg, Ter, Qua, Qui, Sex">
+              </div>
+            </div>
+            <div class="campo">
+              <label for="hora" class="so-leitor">Hora de envio (formato H:MM)</label>
+              <div class="campo__caixa">
+                <input type="text" id="hora" name="hora" inputmode="numeric" autocomplete="off" maxlength="5"
+                       value="6:45" placeholder="6:45" aria-describedby="erro-hora">
+                <p class="campo__erro" id="erro-hora" aria-live="polite"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== Coluna direita: pré-visualização dos canais ===== -->
+        <div class="pub-previa">
+          <h2 class="previa-titulo" id="titulo-previa">Pré-visualização dos canais</h2>
+
+          <div class="cartoes" role="group" aria-labelledby="titulo-previa">
+            <section class="cartao" aria-labelledby="cartao-texto">
+              <h3 id="cartao-texto">Texto</h3>
+              <!-- aria-live: o leitor de tela não anuncia a cada letra (polite), mas o texto está sempre atualizado -->
+              <p class="cartao__texto" id="previa-texto"></p>
+            </section>
+
+            <section class="cartao" aria-labelledby="cartao-audio">
+              <h3 id="cartao-audio">Áudio (voz sintetizada)</h3>
+              <button type="button" class="btn-ouvir" id="btn-ouvir">
+                <img src="img/play-icon.svg" alt="" width="14" height="16">
+                <span id="btn-ouvir-rotulo">Ouvir prévia</span>
+              </button>
+              <p class="cartao__aviso" id="aviso-audio" role="status"></p>
+            </section>
+
+            <section class="cartao" aria-labelledby="cartao-libras">
+              <h3 id="cartao-libras">Libras</h3>
+              <div class="libras">
+                <div class="libras__avatar" aria-hidden="true">Avatar</div>
+                <p class="libras__legenda">Vídeo ou avatar</p>
+              </div>
+            </section>
+
+            <section class="cartao" aria-labelledby="cartao-picto">
+              <h3 id="cartao-picto">Pictogramas</h3>
+              <!-- placeholders: no Figma são só quadrados com a palavra "ícone" -->
+              <div class="pictos" aria-hidden="true">
+                <span class="picto">ícone</span>
+                <span class="picto">ícone</span>
+                <span class="picto">ícone</span>
+              </div>
+            </section>
+          </div>
+
+          <div class="acoes">
+            <button type="submit" class="btn-publicar">Publicar comunicado</button>
+            <button type="button" class="btn-cancelar" id="btn-cancelar">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <!-- acessibilidade.js: aplica contraste/tamanho da fonte salvos (esta tela não tem os botões no Figma) -->
+  <script src="js/acessibilidade.js"></script>
+  <script src="js/publicacao.js"></script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+/* ==========================================================================
+   login.css — SÓ o que é específico da tela de login (WEB01-Login, 1280×800)
+   Tudo que é compartilhado (cores, campos, botões, selo, card) vem do base.css.
+   Aqui ficam os ajustes de medida do Figma, por isso muitos valores "quebrados"
+   (13px, 17px...). Eles existem para a tela ficar idêntica ao protótipo.
+   ========================================================================== */
+
+/* Coluna central de 1280px: no protótipo a tela tem exatamente essa largura */
+.pagina-login {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-bottom: 48px;
+}
+
+/* ---------- Topo ---------- */
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 18px 74px 0 72px;
+}
+.topo .logo-texto { margin-top: 1px; }
+.topo .logo-texto .lema { margin-top: 15px; } /* no Figma "EDUCAÇÃO..." fica 14px abaixo do nome */
+
+.barra-acessibilidade { gap: 19px; }
+
+/* Largura mínima das pílulas, igual ao Figma (125 e 94px); crescem se a fonte aumentar */
+.pilula--contraste {
+  min-width: 125px;
+  justify-content: flex-start;
+  padding: 0 0 0 19px;
+}
+.pilula--fonte {
+  min-width: 94px;
+  padding: 0 19px;
+  gap: 11px;
+}
+
+/* ---------- Selo "Ambiente protegido" ---------- */
+.selo-protegido {
+  margin: 60px 0 0 72px; /* o topo mede 70px de altura (18 de margem + 52 do logo), o selo começa em y=130 */
+  line-height: 1.37; /* as duas linhas do Figma ficam 16,4px uma da outra */
+}
+
+/* ---------- Imagem + card ---------- */
+.login-grade {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 568px + 568px na largura de 1280 */
+  gap: 32px;
+  margin-top: 45px;
+  padding: 0 55px 0 57px;
+}
+
+/* A imagem preenche a célula (o card define a altura; mínimo 411px do Figma) */
+.imagem-wrap {
+  position: relative;
+  min-height: 411px;
+}
+.imagem-wrap .imagem-destaque {
+  position: absolute;
+  inset: 0;
+}
+
+/* ---------- Card ---------- */
+.card {
+  min-height: 411px;
+  padding: 18.5px 38px 22px 34px; /* no Figma a margem direita é maior que a esquerda */
+}
+
+.card .kicker::before { transform: translateY(-1px); } /* o traço fica 1px acima do centro do texto no Figma */
+.card .kicker {
+  gap: 13px;
+  line-height: 1.2;
+}
+
+.card h1 {
+  margin-top: 5.5px;
+  font-size: var(--fs-24);
+  font-weight: 700;
+  color: var(--azul-escuro);
+}
+
+.card .subtitulo {
+  margin-top: 3.5px;
+  font-size: var(--fs-13);
+  line-height: 1.15;
+  color: var(--texto-suave);
+}
+
+/* ---------- Campos ---------- */
+.card form { margin-top: 11px; }
+
+.card .campo { gap: 0.5px; }
+.card .campo label { line-height: 1.08; }
+.card .campo + .campo { margin-top: 15px; }
+/* No Figma o campo Senha tem mais espaço entre o rótulo e a caixa (11px) */
+.card .campo--senha { gap: 9px; }
+
+/* Ícones: posição medida no Figma (o base.css centraliza, aqui fica 1-2px diferente) */
+.card .campo__icone-esq {
+  left: 17px;
+  transform: none;
+}
+.campo--usuario .campo__icone-esq { top: 8px; }
+.campo--senha .campo__icone-esq { top: 7px; }
+.card .campo__icone-dir { right: 15px; } /* olho */
+
+/* No Figma os campos de login são transparentes (mesma cor do card) */
+.card .campo input { background: transparent; }
+
+/* O texto começa em 68px (o base.css previa 46px) e a senha deixa espaço para o olho */
+.card .campo--icone input { padding: 4px 14px 0 68px; }
+.card .campo--senha input { padding-right: 56px; }
+
+/* ---------- Lembrar meu acesso / Esqueci minha senha ---------- */
+.card .linha-opcoes {
+  margin-top: 13.75px;
+  padding-left: 16px;
+  line-height: 1.2;
+}
+.card .linha-opcoes label { gap: 11.5px; }
+
+/* Caixa de marcar menor do que a do base.css (12px no Figma) */
+.card .marcar {
+  width: 13px;
+  height: 12px;
+  border-radius: 2px;
+}
+.card .marcar:checked::after {
+  width: 3px;
+  height: 6px;
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg) translate(-0.5px, -0.5px);
+}
+
+.card .btn-primario { margin: 15.25px 0 0 -1px; width: calc(100% + 0px); } /* Figma: o botão começa 1px à esquerda dos campos */
+
+/* ---------- Divisor e suporte ---------- */
+.card .divisor {
+  gap: 44px; /* espaço entre as linhas e o texto "PRIMEIRO ACESSO" */
+  margin-top: 21px;
+  line-height: 1.2;
+}
+
+.card .link-suporte {
+  align-items: flex-start;
+  margin: 8px 0 0 16px;
+  line-height: 1.2;
+}
+.card .link-suporte span { margin-top: 10px; } /* no Figma o texto fica mais baixo que o ícone */
+
+/* ---------- Telas menores que o protótipo ---------- */
+@media (max-width: 960px) {
+  .topo { padding: 16px 16px 0; flex-wrap: wrap; gap: 16px; }
+  .selo-protegido { margin: 32px 16px 0; }
+  .login-grade {
+    grid-template-columns: 1fr;
+    margin-top: 24px;
+    padding: 0 16px;
+  }
+  .imagem-wrap { min-height: 240px; }
+  .card { padding: 24px 20px; }
+}

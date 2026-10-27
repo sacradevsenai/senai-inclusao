@@ -1,0 +1,289 @@
+/* ==========================================================================
+   publicacao.css — SÓ o que é específico da tela WEB04.2 "Publicação de Notificações"
+   (1461×900). Menu, cores e campos vêm do base.css / menu.css.
+   As medidas (480, 252×168, 55px...) vêm do Figma. Layout com grid/flex.
+   ========================================================================== */
+
+.tela-publicacao { background: var(--fundo-pagina); }
+
+/* Esta tela é mais larga que o cadastro: a coluna de pré-visualização termina
+   em x=1400 (1461 − 61), então o padding da direita é menor que o padrão (104). */
+.tela-publicacao .app-web {
+  padding-right: 61px;
+  grid-template-columns: var(--largura-menu) minmax(0, 1017px);
+}
+
+/* Variáveis só desta tela */
+.tela-publicacao {
+  --borda-cartao: #6b6b6b;   /* ≈ amostrada da imagem do Figma (confira em Stroke) */
+  --fundo-cartao: #f2f2f2;   /* ≈ idem (Fill) */
+}
+
+/* Texto só para leitor de tela (rótulos dos campos de dias/hora, que no Figma não têm texto visível) */
+.so-leitor {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.titulo-pub { font-size: 1.625rem; line-height: 31px; } /* 26px; ajuste fino na conferência */
+
+/* ---------- Grade principal: formulário (480) + pré-visualização (514) ---------- */
+.pub-grade {
+  display: grid;
+  grid-template-columns: 480px 514px;
+  column-gap: 23px;
+  margin-top: 66px;           /* distância do título até o 1º rótulo (y 189) */
+  align-items: start;
+}
+.conteudo-web > .pub-grade { margin-top: 66px; }
+
+/* ---------- Rótulos e controles (coluna esquerda) ---------- */
+.pub-form label,
+.pub-form legend,
+.previa-titulo {
+  font-size: var(--fs-16);
+  font-weight: 700;
+  line-height: 17px;
+  color: var(--label-form);
+}
+.pub-form legend { padding: 0; float: left; width: 100%; } /* legend em fluxo normal, como um rótulo */
+.pub-form legend + * { clear: both; }
+
+/* Cada bloco tem a distância exata do Figma (medida de topo a topo) */
+.bloco { margin: 0; padding: 0; border: 0; min-width: 0; }
+.bloco--titulo { gap: 6px; }
+.bloco--tipo   { margin-top: 27px; }
+.bloco--texto  { margin-top: 30px; gap: 5px; }
+.bloco--turma  { margin-top: 24px; gap: 4px; }
+.bloco--turma label { font-size: var(--fs-14); }
+.bloco--entrega { margin-top: 25px; }
+
+.pub-form .campo input,
+.pub-form textarea,
+.pub-form select {
+  width: 100%;
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-botao);
+  font-size: var(--fs-15);
+  color: var(--titulo-pagina);
+}
+.pub-form .campo input { height: 55px; padding: 0 15px; }
+.pub-form textarea {
+  display: block;
+  height: 120px;
+  padding: 11px 12px;
+  line-height: 24px;
+  resize: none;
+}
+.pub-form textarea::placeholder,
+.pub-form input::placeholder { color: var(--placeholder); }
+
+/* Select: 475px de largura e borda mais escura, seta à direita (SVG embutido, sem arquivo extra) */
+.pub-form select {
+  appearance: none;
+  width: 475px;
+  max-width: 100%;
+  height: 58px;
+  padding: 0 50px 0 15px;
+  border-color: var(--borda-cartao);
+  background: var(--branco) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9' fill='none'><path d='M1 1.5l6 6 6-6' stroke='%231e293b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat right 22px center;
+  cursor: pointer;
+}
+
+/* Estado de erro (o Figma não define; mesma ideia do cadastro: borda vermelha + mensagem abaixo) */
+.pub-form .campo.tem-erro input,
+.pub-form .campo.tem-erro textarea { border-color: var(--erro); }
+
+/* Foco visível (o :focus-visible do base.css já cobre; aqui só realça a borda) */
+.pub-form input:focus-visible,
+.pub-form textarea:focus-visible,
+.pub-form select:focus-visible { border-color: var(--azul-primario); }
+
+/* ---------- Rádios ---------- */
+.radios { display: flex; align-items: center; justify-content: space-between; }
+.bloco--tipo .radios { margin-top: 44px; padding-left: 4px; }
+.bloco--entrega .radios { margin-top: 33px; padding-left: 4px; justify-content: flex-start; gap: 46px; }
+
+.pub-form .radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--fs-15);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--texto-forte);
+  cursor: pointer;
+}
+.radio input {
+  appearance: none;
+  flex: none;
+  width: 20px; height: 20px;
+  margin: 0;
+  background: var(--branco);
+  border: 2px solid var(--borda-cartao);
+  border-radius: 50%;
+  cursor: pointer;
+}
+/* Selecionado: anel azul + bolinha azul no meio */
+.radio input:checked {
+  border-color: var(--azul-menu);
+  background: radial-gradient(circle, var(--azul-menu) 0 5px, var(--branco) 5.5px);
+}
+.radio:has(input:checked) span { font-weight: 700; color: var(--titulo-pagina); }
+.radio input:hover { border-color: var(--azul-menu); }   /* hover (o Figma não define) */
+
+/* ---------- Dias e hora ---------- */
+.agenda {
+  display: grid;
+  grid-template-columns: 235px 235px;
+  column-gap: 10px;
+  margin-top: 18px;
+}
+.pub-form .agenda input { height: 44px; padding: 0 15px; font-size: var(--fs-15); }
+/* Escondido, mas ocupando o mesmo espaço (o resto da tela não se mexe) */
+.agenda.oculta { visibility: hidden; }
+
+/* ---------- Coluna direita ---------- */
+.pub-previa { margin-top: -3px; } /* o título da direita (y 186) é 3px mais alto que o 1º rótulo (y 189) */
+.previa-titulo { display: block; margin-bottom: 9px; }
+
+.cartoes {
+  display: grid;
+  grid-template-columns: 252px 252px;
+  grid-auto-rows: 168px;
+  column-gap: 10px;
+  row-gap: 30px;
+}
+.cartao {
+  min-width: 0;
+  padding: 12px 16px;
+  background: var(--fundo-cartao);
+  border: 2px solid var(--borda-cartao);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.cartao h3 {
+  font-size: var(--fs-15);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--titulo-pagina);
+}
+.cartao__texto {
+  margin-top: 16px;
+  max-width: 185px;          /* no Figma o texto quebra antes da borda do cartão */
+  font-size: var(--fs-14);
+  line-height: 22px;
+  color: var(--titulo-pagina);
+  white-space: pre-line;      /* respeita as quebras de linha digitadas */
+  overflow-wrap: anywhere;
+  max-height: 100px;
+  overflow: hidden;
+}
+.cartao__texto.vazio { color: var(--texto-suave); font-style: italic; }
+
+/* Áudio */
+.btn-ouvir {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 231px;
+  height: 48px;
+  margin: 18px 0 0 -8px;
+  padding: 0 0 0 23px;
+  background: var(--branco);
+  border: 2px solid var(--azul-menu);
+  border-radius: 8px;
+  font-size: var(--fs-14);
+  font-weight: 700;
+  color: var(--azul-menu);
+}
+.btn-ouvir:hover { background: var(--fundo-info); }
+.cartao__aviso { margin-top: 8px; font-size: var(--fs-11); color: var(--erro); }
+
+/* Libras */
+.libras { display: flex; align-items: center; gap: 31px; margin-top: 12px; }
+.libras__avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 80px; height: 80px;
+  background: var(--branco);
+  border: 2px solid var(--titulo-pagina);
+  border-radius: 50%;
+  font-size: var(--fs-12);
+  font-weight: 700;
+  color: var(--texto-forte);
+}
+.libras__legenda { font-size: var(--fs-14); font-weight: 700; line-height: 1.4; color: var(--titulo-pagina); max-width: 90px; }
+
+/* Pictogramas (placeholders) */
+.pictos { display: flex; justify-content: space-between; margin: 24px -8px 0; }
+.picto {
+  display: grid;
+  place-items: center;
+  width: 55px; height: 55px;
+  background: var(--branco);
+  border: 2px solid var(--borda-cartao);
+  border-radius: 8px;
+  font-size: var(--fs-12);
+  color: var(--texto-forte);
+}
+
+/* ---------- Botões de ação ---------- */
+.acoes {
+  display: grid;
+  grid-template-columns: 252px 252px;
+  column-gap: 10px;
+  margin-top: 122px;
+}
+.acoes button {
+  height: 74.3px;
+  border: 2px solid var(--azul-menu);
+  border-radius: var(--raio-botao);
+  font-size: var(--fs-18);
+  font-weight: 700;
+}
+.btn-publicar { background: var(--azul-menu); color: var(--branco); }
+.btn-publicar:hover { filter: brightness(1.08); }
+.btn-cancelar { background: var(--branco); color: var(--azul-menu); }
+.btn-cancelar:hover { background: var(--fundo-info); }
+
+/* ---------- Alto contraste (mesma proposta do base.css) ---------- */
+body.alto-contraste.tela-publicacao {
+  --borda-cartao: #ffffff;
+  --fundo-cartao: #000000;
+}
+body.alto-contraste .pub-form textarea,
+body.alto-contraste .pub-form select,
+body.alto-contraste .radio input,
+body.alto-contraste .libras__avatar,
+body.alto-contraste .picto,
+body.alto-contraste .btn-ouvir,
+body.alto-contraste .btn-cancelar { background-color: #000000; }
+body.alto-contraste .radio input:checked {
+  background: radial-gradient(circle, #ffd400 0 5px, #000000 5.5px);
+}
+body.alto-contraste .btn-publicar { color: #000000; }
+body.alto-contraste .btn-ouvir img { filter: brightness(0) invert(1) sepia(1) saturate(8) hue-rotate(5deg); }
+body.alto-contraste .pub-form select {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9' fill='none'><path d='M1 1.5l6 6 6-6' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+}
+
+/* ---------- Telas menores que o protótipo ---------- */
+@media (max-width: 1100px) {
+  .tela-publicacao .app-web { padding-right: 24px; }
+  .pub-grade { grid-template-columns: minmax(0, 1fr); row-gap: 40px; }
+  .pub-previa { margin-top: 0; }
+  .cartoes, .acoes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 800px) {
+  .pub-grade { margin-top: 40px; }
+  .pub-form select { width: 100%; }
+  .radios { flex-wrap: wrap; gap: 16px; }
+  .agenda { grid-template-columns: 1fr 1fr; }
+  .cartoes, .acoes { grid-template-columns: 1fr; }
+}

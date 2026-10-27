@@ -1,0 +1,130 @@
+/* ==========================================================================
+   cadastro.css — SÓ o que é específico da tela de cadastro (WEB02-Cadastro, 1461×900)
+   Menu lateral, campos, botão e caixa azul vêm do base.css.
+   Os números "quebrados" (27px, 54,4px...) são as distâncias medidas no Figma.
+   ========================================================================== */
+
+/* Fundo da tela (a largura máxima e o menu ficam em menu.css) */
+.tela-cadastro { background: var(--fundo-pagina); }
+
+/* ---------- Título e texto de apoio ---------- */
+.conteudo-web > .subtitulo-pagina { margin-top: 20.8px; }
+/* No Figma o texto fica 1px abaixo da posição calculada (só visual, não muda o resto) */
+.conteudo-web > .titulo-pagina,
+.conteudo-web > .subtitulo-pagina { position: relative; top: 1px; }
+
+/* Todo o formulário é uma coluna; cada bloco tem a distância exata do Figma */
+.formulario { margin-top: 30.6px; }
+.conteudo-web > .formulario { margin-top: 30.6px; }
+
+/* ---------- Campos ---------- */
+.campo--grande { gap: 6px; }
+/* Os rótulos ficam 2px abaixo da linha calculada no Figma; só visual (position não empurra nada) */
+.campo--grande label { position: relative; top: 2px; }
+.campo--grande input { padding-left: 14px; }
+/* Textos de exemplo: no Figma cada campo tem uma altura levemente diferente */
+#matricula { padding-bottom: 4px; }
+#cpf { padding: 2px 15px 0 13px; }
+#nome { padding-top: 2px; }
+
+/* Linha 1: dois campos de 481px com 12px entre eles (974 = 481 + 12 + 481) */
+.linha-campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.campo--nome  { margin-top: 27px; }  /* distância da linha 1 */
+.campo--nome label { margin-bottom: -0.8px; }
+
+/* Senha: metade da largura; no Figma tem mais espaço entre o rótulo e a caixa (12px) */
+.campo--senha {
+  margin-top: 21px;
+  width: calc((100% - 12px) / 2);
+  gap: 12.2px;
+}
+
+/* Senha: texto de bolinhas (placeholder) maior e cadeado fixo à direita */
+.campo--senha input::placeholder {
+  font-size: 1.125rem; /* 18px */
+  letter-spacing: 0;
+}
+#senha { padding-top: 2px; }
+.campo--senha .campo__icone-dir {
+  right: 37px;
+  color: var(--texto-suave);
+  pointer-events: none; /* é só enfeite, não é botão */
+}
+
+/* ---------- Deficiência / Necessidade ---------- */
+.necessidades {
+  margin: 54.4px 0 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.necessidades legend {
+  position: relative;
+  top: 2.5px;
+  padding: 0;
+  margin-bottom: 17.2px;
+  font-size: var(--fs-14);
+  font-weight: 700;
+  color: var(--label-form);
+}
+
+/* 4 cartões com as larguras do Figma (228,9 / 249 / 217,5 / 221,8) e 18,6px entre eles */
+.opcoes-grade {
+  display: grid;
+  grid-template-columns: 230fr 250fr 219fr 223fr; /* larguras do Figma contando a borda */
+  gap: 17.5px;
+  margin: 0 -0.5px;
+}
+.opcao-cartao {
+  height: 62px;
+  margin: -1px 0;     /* no Figma a borda é centrada na linha, então o cartão parece 1px maior */
+  padding: 0 0 3px 19.5px;
+  gap: 9.4px;
+  cursor: pointer;
+}
+.opcao-cartao--13 { font-size: var(--fs-13); } /* no Figma só "Neurodivergente" é 13px */
+.opcao-cartao .marcar {
+  cursor: pointer;
+  width: 24.9px;   /* 22,9 + a borda de 2px (no Figma a borda é centrada) */
+  height: 22.9px;
+  position: relative;
+  top: 1.5px;
+}
+.opcao-cartao--13 { padding-bottom: 0; }
+.opcao-cartao--13 .marcar { top: 0; }
+.opcao-cartao .marcar:checked {
+  background: var(--azul-menu);
+  border-color: var(--azul-menu);
+}
+.opcao-cartao .marcar:checked::after {
+  width: 6px;
+  height: 11px;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+
+/* ---------- Botão e caixa azul ---------- */
+.formulario .btn-primario--grande { margin-top: 41.9px; height: 65.4px; }
+.formulario .caixa-info {
+  margin-top: 32.7px;
+  min-height: 86.4px;
+  padding: 20px 30px;
+}
+.formulario .caixa-info { padding-left: 29px; }
+.caixa-info .icone { position: relative; top: 1px; }
+.caixa-info > div { position: relative; top: -2px; }
+.caixa-info strong { margin-bottom: 10px; }
+
+/* ---------- Telas menores que o protótipo ---------- */
+@media (max-width: 1100px) {
+  .opcoes-grade { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 800px) {
+  .linha-campos { grid-template-columns: 1fr; }
+  .campo--senha { width: 100%; }
+  .linha-campos .campo + .campo { margin-top: 27px; }
+}

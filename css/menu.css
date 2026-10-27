@@ -1,0 +1,21 @@
+/* ==========================================================================
+   menu.css — ajustes do menu lateral compartilhados pelas telas web
+   (cadastro.html e publicacao.html). A base do menu (.menu-lateral, .menu-item,
+   .app-web) continua no base.css; aqui ficam só os detalhes do Figma.
+   ========================================================================== */
+
+/* Largura máxima do protótipo (em telas maiores, centraliza) */
+.app-web { max-width: 1461px; margin: 0 auto; }
+
+/* Ícone do Suporte: no Figma fica 3px acima do centro */
+.icone--suporte { transform: translateY(-3px); }
+
+/* ---------- Telas menores que o protótipo ---------- */
+@media (max-width: 1100px) {
+  .app-web { padding: 0 24px; column-gap: 24px; grid-template-columns: 260px minmax(0, 1fr); }
+}
+@media (max-width: 800px) {
+  .app-web { grid-template-columns: 1fr; padding: 0 16px; }
+  .menu-lateral { padding-top: 140px; }
+  .conteudo-web { padding-top: 40px; padding-bottom: 40px; }
+}

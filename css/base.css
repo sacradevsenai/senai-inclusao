@@ -1,0 +1,587 @@
+/* ==========================================================================
+   base.css — SENAI Inclusão (PSI)
+   Estilos compartilhados por TODAS as telas (web e mobile).
+
+   Origem dos valores: Figma "backup-PSI" (páginas WEB e MOBILE).
+   - Valores sem marca vieram do código de design do Figma.
+   - Valores marcados com "≈" foram estimados a partir da imagem, porque
+     ficam dentro de vetores. Confira no Figma (clique no elemento > Fill /
+     Stroke) e ajuste só a variável em :root, que muda no site inteiro.
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+/* ---------- 1. VARIÁVEIS (cores, tamanhos, medidas) ---------- */
+:root {
+  /* Cores de texto e marca */
+  --azul-escuro: #00274b;      /* títulos, labels, "Contraste" */
+  --azul-primario: #005caa;    /* botão Entrar, links, asterisco, A+ */
+  --azul-menu: #0056b3;        /* menu lateral web, "Instrução para o primeiro login" */
+  --titulo-pagina: #0f172a;    /* título das telas web ("Cadastrar Novo Aluno") */
+  --label-form: #1e293b;       /* labels dos formulários web */
+  --texto-forte: #334155;      /* "Lembrar meu acesso", opções do formulário */
+  --texto-medio: #475569;      /* selo "Ambiente protegido" */
+  --texto-suave: #64748b;      /* subtítulos, A-, link de suporte */
+  --texto-logo-sub: #5a6e85;   /* "EDUCAÇÃO PARA TODOS" */
+  --placeholder: #94a3b8;      /* texto de exemplo dos campos, "PRIMEIRO ACESSO" */
+  --perigo: #ef4444;           /* "Sair" */
+  --branco: #ffffff;
+
+  /* Cores de superfície (≈ estimadas pela imagem) */
+  --fundo-login: #eef4f8;      /* CONFERIDO no Figma (era ≈ #eff5fa) */
+  --fundo-pagina: #ffffff;     /* CONFERIDO: o Figma mostra BRANCO (a camada raiz diz #f4f6f8, mas há um retângulo branco por cima) */
+  --fundo-card: #f8fafc;       /* CONFERIDO: itens do menu (o card de login NÃO usa esta cor, ver .card) */
+  --borda: #cbd5e1;            /* CONFERIDO: borda de campos, cartões e caixas de marcar */
+  --verde-selo: #00c49f;       /* CONFERIDO: círculo do selo (era ≈ #00c49a) */
+  --fundo-info: #e8f2fc;       /* CONFERIDO (era ≈ #e8f1fb) */
+  --borda-info: #d4e5f9;       /* CONFERIDO (era ≈ #bfdbfe) */
+  --fundo-perigo: #fef2f2;     /* CONFERIDO: botão "Sair" */
+  --borda-perigo: #fecaca;     /* CONFERIDO: borda do botão "Sair" */
+
+  /* ACRÉSCIMOS (não existiam no base.css original) */
+  --verde-traco: #00a896;      /* traço verde do "PORTAL DE APRENDIZAGEM" (é diferente do verde do selo) */
+  --borda-suave: #e2e8f0;      /* borda do card de login e linhas do divisor */
+  --borda-pilula: #d1e0ec;     /* borda das pílulas "Contraste" e "A- | A+" */
+  --erro: #b91c1c;             /* cor das mensagens de erro (não existe no Figma; escolhida com contraste AA) */
+
+  /* Tamanhos de fonte em rem, para os botões A- / A+ funcionarem
+     (basta mudar o font-size do <html>) */
+  --fs-10: 0.625rem;
+  --fs-11: 0.6875rem;
+  --fs-12: 0.75rem;
+  --fs-13: 0.8125rem;
+  --fs-14: 0.875rem;
+  --fs-15: 0.9375rem;
+  --fs-16: 1rem;
+  --fs-18: 1.125rem;
+  --fs-20: 1.25rem;
+  --fs-24: 1.5rem;
+
+  /* Medidas */
+  --raio-botao: 8px;
+  --raio-card: 20px;
+  --altura-campo: 39px;        /* login web */
+  --altura-campo-grande: 55px; /* formulários web (cadastro) */
+  --altura-campo-mobile: 48px; /* telas mobile */
+  --largura-menu: 307px;       /* menu lateral web */
+}
+
+/* ---------- 2. RESET E BASE ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px; /* os botões A- / A+ alteram este valor */
+}
+
+html.fonte-menor { font-size: 14px; }
+html.fonte-maior { font-size: 18px; }
+
+body {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  color: var(--texto-forte);
+  background: var(--fundo-login);
+  line-height: 1.2;
+}
+
+img { max-width: 100%; display: block; }
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button { cursor: pointer; }
+
+a { color: var(--azul-primario); }
+
+h1, h2, h3, p { margin: 0; }
+
+/* Foco visível (acessibilidade) */
+:focus-visible {
+  outline: 3px solid var(--azul-primario);
+  outline-offset: 2px;
+}
+
+/* ---------- 3. TIPOGRAFIA ---------- */
+.titulo-pagina {
+  font-size: var(--fs-24);
+  font-weight: 700;
+  color: var(--titulo-pagina);
+}
+
+.subtitulo-pagina {
+  font-size: var(--fs-14);
+  color: var(--texto-suave);
+  margin-top: 12px;
+}
+
+.negrito { font-weight: 700; }
+
+/* Pequeno título com traço verde ("PORTAL DE APRENDIZAGEM") */
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: var(--fs-11);
+  font-weight: 700;
+  color: var(--azul-primario);
+  text-transform: uppercase;
+}
+.kicker::before {
+  content: "";
+  width: 34px;
+  height: 3px;
+  background: var(--verde-traco);
+}
+
+.link-forte {
+  font-size: var(--fs-12);
+  font-weight: 700;
+  color: var(--azul-primario);
+  text-decoration: underline;
+}
+
+/* ---------- 4. TOPO: LOGO E ACESSIBILIDADE ---------- */
+.logo-texto .nome {
+  font-size: var(--fs-20);
+  font-weight: 700;
+  color: var(--azul-escuro);
+}
+.logo-texto .lema {
+  margin-top: 6px;
+  font-size: var(--fs-10);
+  font-weight: 700;
+  color: var(--texto-logo-sub);
+  text-transform: uppercase;
+}
+
+.barra-acessibilidade {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Botões em formato de pílula: "Contraste" e "A- | A+" */
+.pilula {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 45px;
+  padding: 0 18px;
+  background: var(--branco);
+  border: 1px solid var(--borda-pilula);
+  border-radius: 999px;
+  font-size: var(--fs-12);
+  font-weight: 700;
+  color: var(--azul-escuro);
+}
+
+/* Os botões A- e A+ ficam dentro da pílula, então perdem o visual padrão do navegador */
+.pilula button {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+.pilula--fonte { gap: 14px; color: var(--texto-suave); }
+.pilula--fonte .mais { color: var(--azul-primario); font-size: var(--fs-13); }
+.pilula--fonte .separador {
+  width: 1px;
+  height: 17px;
+  background: var(--borda);
+}
+
+/* Versão menor para telas mobile */
+.pilula--mobile { height: 32px; padding: 0 14px; }
+
+/* ---------- 5. SELO "AMBIENTE PROTEGIDO" ---------- */
+.selo-protegido {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: var(--fs-12);
+  font-weight: 700;
+  color: var(--texto-medio);
+}
+.selo-protegido .icone {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  background: var(--verde-selo);
+  color: var(--branco);
+}
+
+/* ---------- 6. CARD (login) ---------- */
+.card {
+  background: var(--fundo-login); /* CONFERIDO: no Figma o card tem a mesma cor do fundo */
+  border: 1px solid var(--borda-suave);
+  border-radius: var(--raio-card);
+  padding: 22px 35px 30px;
+}
+
+.imagem-destaque {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--raio-card);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* ---------- 7. CAMPOS DE FORMULÁRIO ---------- */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo label {
+  font-size: var(--fs-12);
+  font-weight: 700;
+  color: var(--azul-escuro);
+}
+.campo .obrigatorio { color: var(--azul-primario); }
+
+.campo__caixa {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.campo input,
+.campo select {
+  width: 100%;
+  height: var(--altura-campo);
+  padding: 0 14px;
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-botao);
+  font-size: var(--fs-13);
+  color: var(--texto-forte);
+}
+.campo input::placeholder { color: var(--placeholder); }
+
+/* Ícone à esquerda (pessoa, cadeado) e à direita (olho) */
+.campo--icone input { padding-left: 46px; }
+.campo__icone-esq,
+.campo__icone-dir {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  color: var(--texto-suave);
+}
+.campo__icone-esq { left: 16px; }
+.campo__icone-dir {
+  right: 16px;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+/* Mensagem de erro (ACRÉSCIMO): o Figma não tem estado de erro. Fica FORA do fluxo
+   (position: absolute) no espaço entre os campos, então nada muda de lugar. */
+.campo { position: relative; }
+.campo__erro {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  margin: 1px 0 0;
+  font-size: var(--fs-11);
+  line-height: 1.2;
+  color: var(--erro);
+}
+.campo__caixa .campo__erro { top: calc(100% + 1px); }
+.campo.tem-erro input { border-color: var(--erro); }
+
+/* Campo dos formulários web (labels de 14px e campo mais alto) */
+.campo--grande label {
+  font-size: var(--fs-14);
+  color: var(--label-form);
+}
+.campo--grande input {
+  height: var(--altura-campo-grande);
+  padding: 0 15px;
+  font-size: var(--fs-14);
+}
+
+/* Campo das telas mobile */
+.campo--mobile input { height: var(--altura-campo-mobile); }
+
+/* Linha "Lembrar meu acesso" + "Esqueci minha senha" */
+.linha-opcoes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--fs-12);
+  color: var(--texto-forte);
+}
+.linha-opcoes label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Caixa de marcar personalizada */
+.marcar {
+  appearance: none;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  background: var(--branco);
+  border: 1px solid var(--texto-suave);
+  border-radius: 4px;
+  display: grid;
+  place-content: center;
+}
+.marcar:checked {
+  background: var(--azul-primario);
+  border-color: var(--azul-primario);
+}
+.marcar:checked::after {
+  content: "";
+  width: 5px;
+  height: 9px;
+  border: solid var(--branco);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+
+/* Cartões de opção (Visual, Neurodivergente, Auditiva, Física) */
+.opcoes-grade {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+.opcao-cartao {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 60px;
+  padding: 0 20px;
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  font-size: var(--fs-13);
+  font-weight: 700;
+  color: var(--texto-forte);
+}
+.opcao-cartao .marcar {
+  width: 22.9px;
+  height: 20.9px;
+  border: 2px solid var(--placeholder); /* CONFERIDO: #94a3b8 e 2px no Figma */
+  border-radius: 6px;
+}
+.opcao-cartao { font-size: 0.84375rem; /* 13,5px */ }
+
+/* ---------- 8. BOTÕES ---------- */
+.btn-primario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: var(--altura-campo);
+  background: var(--azul-primario);
+  border: 1px solid var(--azul-primario);
+  border-radius: var(--raio-botao);
+  font-size: var(--fs-20);
+  font-weight: 700;
+  color: var(--branco);
+  text-decoration: none;
+}
+.btn-primario:hover { filter: brightness(1.08); }
+
+.btn-primario--grande {
+  height: 65px;
+  font-size: var(--fs-16);
+  background: var(--azul-menu); /* CONFERIDO: no cadastro o botão é #0056b3, não #005caa */
+  border-color: var(--azul-menu);
+}
+.btn-primario--mobile {
+  height: var(--altura-campo-mobile);
+  font-size: var(--fs-15);
+}
+
+/* ---------- 9. DIVISOR E LINK DE SUPORTE ---------- */
+.divisor {
+  display: flex;
+  align-items: center;
+  gap: 46px;
+  font-size: var(--fs-10);
+  font-weight: 700;
+  color: var(--placeholder);
+  text-transform: uppercase;
+}
+.divisor::before,
+.divisor::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--borda-suave);
+}
+
+.link-suporte {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--fs-12);
+  color: var(--texto-suave);
+}
+.link-suporte .interrogacao {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--texto-suave);
+  border-radius: 50%;
+  font-size: var(--fs-10);
+  font-weight: 700;
+}
+.link-suporte a {
+  font-weight: 700;
+  color: var(--azul-primario);
+  text-decoration: none;
+}
+
+/* ---------- 10. LAYOUT DAS TELAS WEB INTERNAS (menu lateral + conteúdo) ---------- */
+.app-web {
+  display: grid;
+  grid-template-columns: var(--largura-menu) minmax(0, 974px);
+  column-gap: 49px;
+  min-height: 100vh;
+  padding: 0 104px 0 27px;
+  background: var(--fundo-pagina);
+}
+
+.menu-lateral {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: 15.7px;       /* CONFERIDO: itens a cada 90px (74,3 + 15,7) */
+  padding-top: 200px; /* o logo fica acima da lista (ver .menu-logo) */
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: 74.3px;
+  padding: 4px 12px 0 32px; /* 32 + 1 de borda = ícone a 33px; 4px em cima baixam o texto 2px, como no Figma */
+  background: var(--fundo-card);
+  border: 1px solid var(--azul-menu);
+  border-radius: 12px;
+  font-size: var(--fs-18);
+  font-weight: 700;
+  color: var(--azul-menu);
+  text-decoration: none;
+}
+.menu-item.ativo {
+  background: var(--azul-menu);
+  color: var(--branco);
+}
+/* CONFERIDO: no Figma "Sair" fica a 90px do item anterior, igual aos outros (sem margem extra) */
+.menu-item--sair {
+  background: var(--fundo-perigo);
+  border-color: var(--borda-perigo);
+  color: var(--perigo);
+  padding: 0 12px 4px 32px; /* no Figma o texto de "Sair" fica 2px mais alto que nos outros */}
+.menu-item--sair .icone { margin-top: 4px; }
+
+/* Logo do menu: 252×119px a 24px da esquerda e 11px do topo */
+.menu-logo { position: absolute; top: 11px; left: -3px; width: 252px; height: 119px; }
+.menu-item .icone { flex: none; display: grid; place-items: center; width: 24px; height: 24px; margin-top: -4px; }
+.menu-item .icone img { max-width: none; } /* ícones têm até 26px; não podem ser espremidos */
+
+.conteudo-web { padding-top: 92px; }
+.conteudo-web > * + * { margin-top: 24px; }
+
+/* ---------- 11. CAIXA DE INSTRUÇÃO ---------- */
+.caixa-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 30px;
+  background: var(--fundo-info);
+  border: 1px solid var(--borda-info);
+  border-radius: 12px;
+  font-size: var(--fs-13);
+  color: var(--texto-forte);
+}
+.caixa-info .icone {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 31px;
+  height: 31px;
+  border-radius: 50%;
+  background: var(--azul-menu);
+  font-weight: 700;
+  color: var(--branco);
+}
+.caixa-info strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.84375rem; /* 13,5px */
+  color: var(--azul-menu);
+}
+
+/* ---------- 12. ALTO CONTRASTE (botão "Contraste") ----------
+   ATENÇÃO: o Figma NÃO mostra como fica a tela em alto contraste. Este bloco é uma
+   proposta minha (fundo preto, texto branco, destaque amarelo) para o botão funcionar
+   sem deixar nada ilegível. Combine com o professor ou remova se preferir.
+   As cores "azuis" viram amarelo, e o que era branco (campos, pílulas, cartões) vira preto. */
+body.alto-contraste {
+  --fundo-login: #000000;
+  --fundo-pagina: #000000;
+  --fundo-card: #000000;
+  --fundo-info: #000000;
+  --borda: #ffffff;
+  --borda-suave: #ffffff;
+  --borda-pilula: #ffffff;
+  --borda-info: #ffffff;
+  --texto-forte: #ffffff;
+  --texto-medio: #ffffff;
+  --texto-suave: #ffffff;
+  --azul-escuro: #ffffff;
+  --label-form: #ffffff;
+  --titulo-pagina: #ffffff;
+  --texto-logo-sub: #ffffff;
+  --placeholder: #d4d4d4;
+  --azul-primario: #ffd400;
+  --azul-menu: #ffd400;
+  --perigo: #ff8a8a;
+  --erro: #ff8a8a;
+  --fundo-perigo: #000000;
+  --borda-perigo: #ff8a8a;
+}
+body.alto-contraste .btn-primario,
+body.alto-contraste .menu-item.ativo { color: #000000; }
+body.alto-contraste .pilula,
+body.alto-contraste .campo input,
+body.alto-contraste .opcao-cartao,
+body.alto-contraste .marcar { background: #000000; }
+body.alto-contraste .marcar:checked { background: #ffd400; }
+body.alto-contraste .caixa-info .icone { background: #ffd400; color: #000000; }
+body.alto-contraste .menu-logo { background: #ffffff; border-radius: 8px; } /* o logo tem fundo branco */
+/* Ícones cinza ficam claros; o ícone do item ativo (sobre amarelo) fica preto */
+body.alto-contraste .menu-item:not(.ativo):not(.menu-item--sair) .icone img,
+body.alto-contraste .campo__icone-esq img,
+body.alto-contraste .campo__icone-dir img { filter: invert(1) grayscale(1) brightness(1.6); }
+body.alto-contraste .menu-item.ativo .icone img { filter: brightness(0); }
